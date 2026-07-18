@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit 自动审查配置 — https://docs.coderabbit.ai/reference/configuration
+language: "zh-CN"
+
+tone_instructions: "审查用中文，语气直接、对事不对人；先说结论再说原因，不要客套。"
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  auto_review:
+    enabled: true
+    drafts: false
+  path_filters:
+    - "!public/showcase/**"
+    - "!package-lock.json"
+    - "!src/lib/showcase-images.json"
+  path_instructions:
+    - path: "src/**"
+      instructions: |
+        本项目是 BYOK 纯客户端应用，隐私红线（最高优先级，违反一律 block）：
+        1. 用户的 API key / prompt / 图像只允许发往用户自己配置的端点（config 里的 baseUrl），
+           绝不允许发往任何其他服务器。发现新增的 fetch/XHR/sendBeacon/WebSocket 指向
+           第三方域名或本站 /api 携带上述数据，必须明确标记为隐私违规。
+        2. 密钥/历史/配置只能存 localStorage / IndexedDB，不允许写入 cookie 或发给服务端。
+        3. 不允许引入新的遥测/analytics SDK 或外部脚本。
+    - path: "worker/**"
+      instructions: |
+        Worker 只做两件事：托管静态资源 + /api 匿名计数（KV 里只存整数）。
+        任何让 Worker 接触 prompt / key / 图像内容、或存储除计数整数之外用户数据的改动，
+        都是隐私违规，必须 block。
+
+chat:
+  auto_reply: true
