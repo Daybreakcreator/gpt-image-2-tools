@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import { LANDINGS } from '../lib/landing';
+
+export function getStaticPaths() {
+  return LANDINGS.map((l) => ({ params: { slug: l.slug }, props: { l } }));
+}
+
+const { l } = Astro.props;
+const site = Astro.site;
+const url = new URL(`/${l.slug}`, site).href;
+
+// 结构化数据：SoftwareApplication + FAQPage（用中文主市场内容）
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'GPT-Image-2 Tools',
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'Web',
+      url,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      description: l.description,
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: l.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q_zh,
+        acceptedAnswer: { '@type': 'Answer', text: f.a_zh },
+      })),
+    },
+  ],
+};
+---
+
+<Base title={l.title} description={l.description}>
+  <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`} />
+
+  <article class="max-w-2xl">
+    <header class="mb-6">
+      <h1 class="text-2xl font-bold tracking-tight sm:text-[28px]">{l.h1_zh}</h1>
+      <p class="mt-1 text-sm text-mut2">{l.h1_en}</p>
+      <p class="mt-3 text-sm text-fg2">{l.sub_zh}</p>
+      <p class="mt-1 text-sm text-mut">{l.sub_en}</p>
+      <a
+        href="/"
+        class="mt-5 inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium text-ink transition"
+        style="background:linear-gradient(135deg,#22c55e,#0e7a3b);box-shadow:0 4px 12px rgba(34,197,94,.25)"
+      >
+        <span data-i18n="landing.cta">开始创作 →</span>
+      </a>
+    </header>
+
+    <section class="space-y-3 text-sm text-fg2">
+      <p>{l.intro_zh}</p>
+      <p class="text-mut">{l.intro_en}</p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-base font-semibold text-fg">怎么用 · How it works</h2>
+      <ol class="mt-3 space-y-2 text-sm text-fg2">
+        {
+          l.steps_zh.map((s, i) => (
+            <li class="flex gap-2.5">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-panel2 text-xs text-grass">
+                {i + 1}
+              </span>
+              <span>
+                {s}
+                <span class="block text-xs text-mut">{l.steps_en[i]}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-base font-semibold text-fg">常见问题 · FAQ</h2>
+      <div class="mt-3 space-y-4">
+        {
+          l.faq.map((f) => (
+            <div>
+              <h3 class="text-sm font-medium text-fg">{f.q_zh}</h3>
+              <p class="mt-1 text-sm text-fg2">{f.a_zh}</p>
+              <p class="mt-1 text-xs text-mut">
+                <span class="font-medium">{f.q_en}</span> {f.a_en}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <nav class="mt-12 border-t border-linesoft pt-6">
+      <p class="text-xs text-mut2">更多用例 · More use cases</p>
+      <div class="mt-2 flex flex-wrap gap-2">
+        {
+          LANDINGS.filter((o) => o.slug !== l.slug).map((o) => (
+            <a href={`/${o.slug}`} class="rounded-lg border border-line px-3 py-1.5 text-xs text-fg2 transition hover:border-[#3a3a44] hover:text-fg">
+              {o.h1_zh}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+  </article>
+</Base>

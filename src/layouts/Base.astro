@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+import LangToggle from '../components/LangToggle.tsx';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'GPT-Image-2 Tools · 一个输入框，想到即生成',
+  description = 'GPT-Image-2 Tools 是一个 AI 图像创作工具：写句话就出图，拖张图进来就能改。支持局部重绘与迭代，配置只存浏览器，你的密钥永不离开本机。',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/showcase/peaks.jpg', Astro.site).href;
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/', label: '创作', key: 'nav.create' },
+  { href: '/gallery', label: '历史', key: 'nav.history' },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1536" />
+    <meta property="og:image:height" content="1024" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="sticky top-0 z-30 border-b border-linesoft bg-ink/80 backdrop-blur">
+      <div class="mx-auto flex h-14 max-w-6xl items-center gap-5 px-4 sm:px-6">
+        <a href="/" class="flex items-center gap-2.5">
+          <span
+            class="flex h-[22px] w-[22px] items-center justify-center rounded-md"
+            style="background:linear-gradient(135deg,#22c55e,#0e7a3b);box-shadow:0 0 0 1px rgba(34,197,94,.3),0 4px 12px rgba(34,197,94,.25)"
+          >
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1.5 L8 6 L6 10.5 L4 6 Z" fill="#0d0d0f"></path></svg>
+          </span>
+          <span class="font-semibold tracking-tight">GPT-Image-2 <span class="text-grass">Tools</span></span>
+        </a>
+        <nav class="flex gap-1 text-sm">
+          {
+            nav.map((n) => (
+              <a
+                href={n.href}
+                data-i18n={n.key}
+                class:list={[
+                  'rounded-lg px-3 py-1.5 transition',
+                  path === n.href ? 'bg-panel2 font-medium text-fg' : 'text-fg2 hover:bg-panel2',
+                ]}
+              >
+                {n.label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="flex-1"></div>
+        <div class="hidden items-center gap-1.5 rounded-lg border border-line px-2.5 py-1.5 text-xs text-mut sm:flex" id="conn-pill">
+          <span class="h-1.5 w-1.5 rounded-full bg-mut2"></span>
+          <span>未连接</span>
+        </div>
+        <a
+          href="https://github.com/xianjianlf2/gpt-image-2-tools"
+          target="_blank"
+          rel="noopener"
+          title="Star on GitHub"
+          aria-label="GitHub"
+          class="flex items-center gap-1.5 rounded-lg border border-line px-2.5 py-1.5 text-xs text-fg2 transition hover:border-[#3a3a44] hover:text-fg"
+        >
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+            ><path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+            ></path></svg
+          >
+          <span class="hidden sm:inline">Star</span>
+        </a>
+        <LangToggle client:load />
+      </div>
+    </header>
+    <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+      <slot />
+      <footer class="mt-16 border-t border-linesoft pt-6 text-xs text-mut2">
+        <span data-i18n="footer.note">客户端工具 · 你的密钥只存在本机，不会上传</span> ·
+        <a href="https://github.com/xianjianlf2/gpt-image-2-tools" target="_blank" rel="noopener" class="hover:text-fg2">GitHub</a> ·
+        <a href="/rss.xml" class="hover:text-fg2">RSS</a> ·
+        <a href="/sitemap.xml" class="hover:text-fg2">Sitemap</a> ·
+        <a href="https://markxian.cn" target="_blank" rel="noopener" class="hover:text-fg2">Built by Mark Xian ↗</a>
+      </footer>
+    </main>
+    <script>
+      import { DICT, getLang } from '../lib/i18n';
+      function translate() {
+        const lang = getLang();
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const k = el.getAttribute('data-i18n');
+          if (k && DICT[lang][k]) el.textContent = DICT[lang][k];
+        });
+        const pill = document.getElementById('conn-pill');
+        if (pill) {
+          let on = false;
+          try {
+            const c = JSON.parse(localStorage.getItem('gpt-image-2:config') || '{}');
+            on = !!(c.apiKey && c.baseUrl);
+          } catch (e) {}
+          const dot = pill.querySelector('span:first-child');
+          const txt = pill.querySelector('span:last-child');
+          if (dot) dot.setAttribute('style', on ? 'width:6px;height:6px;border-radius:9999px;background:#22c55e;box-shadow:0 0 8px #22c55e' : 'width:6px;height:6px;border-radius:9999px;background:#52525b');
+          if (txt) txt.textContent = DICT[lang][on ? 'conn.on' : 'conn.off'];
+        }
+      }
+      translate();
+      window.addEventListener('langchange', translate);
+    </script>
+    <!-- Cloudflare Web Analytics（无 Cookie，仅匿名访问统计）·原样注入避免属性转义。
+         token=image.markxian.cn 专属 site（仅本子域，与 zone 自动统计分开）。
+         旧 token 0076769c 在本账号无任何数据（疑似属于别的 CF 账号），已弃用。 -->
+    <Fragment
+      set:html={`<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "2cf208e5455a4471b5e7d77f564bc8fc"}'></script>`}
+    />
+  </body>
+</html>

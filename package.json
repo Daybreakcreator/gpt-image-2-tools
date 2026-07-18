@@ -1,0 +1,27 @@
+{
+  "name": "gpt-image-2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "GPT-Image-2 Tools — BYOK 在线 AI 图像生成 Playground（文生图 / 图生图），纯客户端，密钥只存浏览器。",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "gen:showcase": "node --env-file=.env scripts/gen-showcase.mjs",
+    "deploy": "astro build && wrangler pages deploy dist --project-name gpt-image-2"
+  },
+  "dependencies": {
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/tailwind": "^5.1.2",
+    "astro": "^4.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.13"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "wrangler": "^3.80.0"
+  }
+}

@@ -1,2 +1,10 @@
 node_modules/
+dist/
+.astro/
+.wrangler/
 .DS_Store
+*.log
+.claude/
+# 从线上恢复的构建产物，仅本地参考
+_recovered-bundle.multipart
+.env

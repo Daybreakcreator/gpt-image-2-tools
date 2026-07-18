@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0"><channel>
-  <title>GPT-Image-2 Tools</title>
-  <link>https://image.markxian.cn</link>
-  <description>BYOK 在线 AI 图像生成 Playground</description>
-  <item><title>多模态图像创作</title><link>https://image.markxian.cn/</link><description>一个输入框：文字生图，附图即编辑</description></item>
-  <item><title>生成历史</title><link>https://image.markxian.cn/gallery</link><description>本地保存的生成记录</description></item>
-</channel></rss>

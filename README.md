@@ -30,17 +30,21 @@
 
 Your endpoint, key, model, history and settings live only in your browser (`localStorage` / IndexedDB). The app talks to **your** endpoint directly — there is no server in the middle that sees your key, prompts, or images.
 
-## 🚀 Self-host
+## 🛠 Develop / Self-host
 
-This repo is the **built static app** — just serve the files:
+Built with **Astro + React islands + Tailwind**. This repo is the full source.
 
 ```bash
-# any static server works
-npx serve .
-# or drop the folder on Cloudflare Pages / Netlify / Vercel / GitHub Pages / nginx
+npm install
+npm run dev      # local dev at http://localhost:4321
+npm run build    # static output in dist/
 ```
 
-Then open it, click **Settings**, and fill in your endpoint + key + model.
+`dist/` is a fully static app — drop it on Cloudflare Pages / Netlify / Vercel / GitHub Pages / nginx, or `npx serve dist`. Then open it, click **Settings**, and fill in your endpoint + key + model.
+
+Optional: `worker/image-worker.js` + `wrangler.image.toml` show how the live site serves `dist/` from a Cloudflare Worker with an anonymous generation counter (a single integer in KV — it never sees prompts, keys, or images). Replace the route/KV ids with your own if you want the same setup.
+
+Optional: `npm run gen:showcase` regenerates the homepage showcase images with your own key (`cp .env.example .env` first).
 
 ## 🐛 Found a bug? Want a feature?
 

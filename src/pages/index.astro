@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Playground from '../components/Playground.tsx';
+import Showcase from '../components/Showcase.tsx';
+import UsageStat from '../components/UsageStat.tsx';
+import { LANDINGS } from '../lib/landing';
+---
+
+<Base>
+  <section class="mb-6">
+    <h1 class="text-2xl font-bold tracking-tight sm:text-[28px]" data-i18n="hero.title">想到即生成</h1>
+    <p class="mt-1.5 text-sm text-mut" data-i18n="hero.sub">一个输入框：写文字成图，拖张图进来就能改</p>
+  </section>
+
+  <Playground client:only="react" />
+
+  <UsageStat client:idle />
+
+  <Showcase client:visible />
+
+
+  <!-- 预渲染 SEO 文案（中英双语，不依赖 JS） -->
+  <section class="mt-16 max-w-2xl space-y-3 text-sm text-fg2">
+    <h2 class="text-base font-semibold text-fg">关于 GPT-Image-2 Tools</h2>
+    <p>
+      GPT-Image-2 Tools 是一个面向 OpenAI 兼容图像接口的纯客户端创作工具。一个输入框搞定一切：直接写
+      Prompt 就是文生图，拖一张图进来自动变成改图 / 局部重绘。可调尺寸、质量、张数，结果可一键继续迭代。
+      无需注册、无服务器中转——你的密钥只存在浏览器本地，永不离开本机。
+    </p>
+    <p class="text-mut">
+      GPT-Image-2 Tools is a fully client-side image playground for any OpenAI-compatible image endpoint.
+      One input does it all: write a prompt to generate, or drop an image to edit / inpaint. Tune size, quality
+      and count, then iterate on any result in one click. No signup, no server relay — your key stays in your
+      browser and never leaves your device.
+    </p>
+    <div class="flex flex-wrap gap-2 pt-1">
+      {
+        LANDINGS.map((l) => (
+          <a href={`/${l.slug}`} class="rounded-lg border border-line px-3 py-1.5 text-xs text-fg2 transition hover:border-[#3a3a44] hover:text-fg">
+            {l.h1_zh}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>
