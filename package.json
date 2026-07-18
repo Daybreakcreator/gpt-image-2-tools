@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "gen:showcase": "node --env-file=.env scripts/gen-showcase.mjs",
-    "deploy": "astro build && wrangler pages deploy dist --project-name gpt-image-2"
+    "deploy": "astro build && wrangler deploy -c wrangler.image.toml"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.2",

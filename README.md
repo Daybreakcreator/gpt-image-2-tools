@@ -1,5 +1,8 @@
 # GPT-Image-2 Tools
 
+[![build](https://github.com/xianjianlf2/gpt-image-2-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/xianjianlf2/gpt-image-2-tools/actions/workflows/ci.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 > A free, privacy-first, multi-provider **AI image playground** — text-to-image, image-to-image, and inpainting in one box, with **voice control**. Your API key stays in your browser and never leaves your device.
 >
 > 免费、隐私优先、多端点兼容的 **AI 图像创作工具** —— 一个输入框搞定文生图 / 图生图 / 局部重绘，还能**说话即生成**。密钥只存浏览器，永不离开本机。
@@ -41,6 +44,11 @@ npm run build    # static output in dist/
 ```
 
 `dist/` is a fully static app — drop it on Cloudflare Pages / Netlify / Vercel / GitHub Pages / nginx, or `npx serve dist`. Then open it, click **Settings**, and fill in your endpoint + key + model.
+
+**Deploy your own** in one click (static build, no config needed):
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/xianjianlf2/gpt-image-2-tools)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xianjianlf2/gpt-image-2-tools)
 
 Optional: `worker/image-worker.js` + `wrangler.image.toml` show how the live site serves `dist/` from a Cloudflare Worker with an anonymous generation counter (a single integer in KV — it never sees prompts, keys, or images). Replace the route/KV ids with your own if you want the same setup.
 
