@@ -4,6 +4,13 @@ import GalleryView from '../components/GalleryView.tsx';
 ---
 
 <Base title="生成历史 — GPT-Image-2 Tools" description="你在本机生成过的图像记录（仅保存在浏览器本地）。">
-  <h1 class="mb-6 text-2xl font-bold" data-i18n="gallery.title">生成历史</h1>
-  <GalleryView client:only="react" />
+  <section class="mx-auto max-w-6xl">
+    <div class="mb-8">
+      <p class="mb-2 text-sm font-semibold text-grass">仅保存在这台设备</p>
+      <h1 class="text-4xl font-semibold tracking-[-0.035em]" data-i18n="gallery.title">生成历史</h1>
+    </div>
+    <div class="apple-card rounded-[28px] p-5 sm:p-8">
+      <GalleryView client:only="react" />
+    </div>
+  </section>
 </Base>

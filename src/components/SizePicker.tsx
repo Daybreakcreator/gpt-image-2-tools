@@ -67,7 +67,7 @@ export default function SizePicker({ value, onChange }: { value: Size; onChange:
                 {o.auto ? (
                   <span className="rounded-[3px] border-[1.5px] border-dashed border-mut2" style={{ width: o.w, height: o.h }} />
                 ) : (
-                  <span className="rounded-[3px]" style={{ width: o.w, height: o.h, background: active ? '#22c55e' : '#3f3f46' }} />
+                  <span className="rounded-[3px]" style={{ width: o.w, height: o.h, background: active ? '#0071e3' : '#86868b' }} />
                 )}
               </span>
               <span className={`text-[11px] ${active ? 'text-fg' : 'text-fg2'}`}>{o.auto ? t('size.auto') : o.label}</span>

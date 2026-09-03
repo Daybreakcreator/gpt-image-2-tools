@@ -104,7 +104,7 @@ export default function MaskEditor({ file, onApply, onCancel }: Props) {
   }
 
   const tool = (active: boolean) =>
-    `rounded-lg px-3 py-1.5 text-xs transition ${active ? 'bg-iris text-ink font-medium' : 'border border-line text-fg2 hover:border-[#3a3a44]'}`;
+    `rounded-lg px-3 py-1.5 text-xs transition ${active ? 'bg-iris text-white font-medium' : 'border border-line text-fg2 hover:border-mut2'}`;
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-ink/95 p-4 backdrop-blur">
@@ -151,7 +151,7 @@ export default function MaskEditor({ file, onApply, onCancel }: Props) {
           <button
             onClick={apply}
             disabled={!painted}
-            className="rounded-lg bg-iris px-4 py-2 text-sm font-medium text-ink transition active:scale-95 disabled:opacity-40"
+            className="rounded-lg bg-iris px-4 py-2 text-sm font-medium text-white transition active:scale-95 disabled:opacity-40"
           >
             {t('mask.apply')}
           </button>

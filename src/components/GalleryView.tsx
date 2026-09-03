@@ -194,7 +194,7 @@ export default function GalleryView() {
                 {selMode && (
                   <span
                     className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md border text-[11px] ${
-                      checked ? 'border-grass bg-grass text-ink' : 'border-line text-transparent'
+                      checked ? 'border-grass bg-grass text-white' : 'border-line text-transparent'
                     }`}
                   >
                     ✓
@@ -222,7 +222,7 @@ export default function GalleryView() {
                 {/* 操作 */}
                 {!selMode && (
                   <div className="flex shrink-0 flex-col items-end gap-1.5">
-                    <button onClick={() => restore(g)} className="rounded-lg bg-grass px-2.5 py-1 text-[11px] font-medium text-ink">
+                    <button onClick={() => restore(g)} className="rounded-lg bg-grass px-2.5 py-1 text-[11px] font-medium text-white">
                       {t('hist.restore')}
                     </button>
                     <div className="flex gap-2 text-[11px] text-mut">

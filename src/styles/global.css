@@ -16,10 +16,16 @@
 @layer base {
   html {
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-ink text-fg antialiased;
     font-feature-settings: 'cv11';
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(255,255,255,.95) 0, rgba(255,255,255,0) 42rem),
+      #f5f5f7;
+    letter-spacing: -0.01em;
   }
   button,
   a,
@@ -34,10 +40,11 @@
   /* 输入控件：移动端 16px 防 iOS 缩放 */
   .input {
     @apply w-full rounded-xl border border-line bg-panel px-3.5 py-3 text-base text-fg outline-none transition placeholder:text-mut2 focus:border-grass/60 sm:text-sm;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.03);
   }
   /* 闪烁骨架 */
   .shimmer-bg {
-    background: linear-gradient(90deg, #18181d 0%, #232329 40%, #18181d 80%);
+    background: linear-gradient(90deg, #ececf0 0%, #f7f7f9 40%, #ececf0 80%);
     background-size: 480px 100%;
     @apply animate-shimmer;
   }
@@ -50,17 +57,18 @@
   /* 主按钮 */
   .btn-primary {
     @apply flex items-center justify-center gap-2 rounded-xl font-semibold text-ink transition active:scale-[0.98];
-    background: #22c55e;
-    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5), 0 8px 24px rgba(34, 197, 94, 0.22);
+    color: white;
+    background: #0071e3;
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.2);
   }
   .btn-primary:hover {
     filter: brightness(1.08);
   }
   .btn-primary:disabled {
     @apply cursor-default opacity-100;
-    background: #141418;
-    border: 1px solid #26262d;
-    color: #a1a1aa;
+    background: #e8e8ed;
+    border: 1px solid #d2d2d7;
+    color: #86868b;
     box-shadow: none;
     filter: none;
   }
@@ -69,7 +77,7 @@
     @apply rounded-full border border-line bg-panel2 text-fg2 transition;
   }
   .chip:hover {
-    @apply border-[#3a3a44] text-fg;
+    @apply border-[#a1a1a6] text-fg;
   }
   /* 横向滚动隐藏滚动条 */
   .scroll-x {
@@ -79,4 +87,20 @@
   .scroll-x::-webkit-scrollbar {
     display: none;
   }
+}
+
+@layer utilities {
+  .apple-card {
+    background: rgba(255,255,255,.88);
+    border: 1px solid rgba(0,0,0,.08);
+    box-shadow: 0 18px 60px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+    backdrop-filter: saturate(180%) blur(24px);
+  }
+}
+
+::selection { background: rgba(0,113,227,.18); }
+
+:focus-visible {
+  outline: 3px solid rgba(0,113,227,.35);
+  outline-offset: 2px;
 }

@@ -432,9 +432,9 @@ export default function Playground() {
           {t('import.done')}
         </div>
       )}
-      <div className="grid gap-6 lg:grid-cols-[440px_1fr]">
+      <div className="apple-card grid overflow-hidden rounded-[28px] lg:grid-cols-[460px_1fr]">
         {/* ── Composer ── */}
-        <div className="space-y-4 lg:border-r lg:border-linesoft lg:pr-6">
+        <div className="space-y-4 border-b border-linesoft p-5 sm:p-7 lg:border-b-0 lg:border-r lg:p-8">
           <div className="flex items-center justify-between">
             <span
               className={`rounded-full border px-3 py-1 text-[12px] font-medium ${
@@ -527,7 +527,7 @@ export default function Playground() {
         </div>
 
         {/* ── Results ── */}
-        <div ref={resultsRef} className="scroll-mt-20">
+        <div ref={resultsRef} className="min-h-[560px] scroll-mt-20 bg-[#fafafa] p-5 sm:p-7 lg:p-8">
           {loading ? (
             partials.length > 0 ? (
               <StreamingPreview images={partials} elapsed={elapsed} />
@@ -624,7 +624,7 @@ export default function Playground() {
                           e.stopPropagation();
                           continueFrom(img);
                         }}
-                        className="pointer-events-auto flex items-center gap-1.5 rounded-[9px] px-2.5 py-1.5 text-xs font-medium text-ink"
+                        className="pointer-events-auto flex items-center gap-1.5 rounded-[9px] px-2.5 py-1.5 text-xs font-medium text-white"
                         style={{ background: '#a78bfa', boxShadow: '0 4px 16px rgba(167,139,250,.4)' }}
                       >
                         ⟳ {t('btn.continue')}
@@ -785,23 +785,23 @@ function MetaCard({ meta, actual }: { meta: { size: string; quality: string; mod
 function EmptyState() {
   const t = useT();
   return (
-    <div className="relative flex min-h-[420px] items-center justify-center overflow-hidden rounded-2xl">
+    <div className="relative flex min-h-[496px] items-center justify-center overflow-hidden rounded-[22px] border border-black/[0.04] bg-white">
       <div
-        className="absolute inset-0 opacity-[0.45]"
-        style={{ backgroundImage: 'radial-gradient(#1a1a20 1px, transparent 1px)', backgroundSize: '24px 24px' }}
+        className="absolute inset-0 opacity-60"
+        style={{ backgroundImage: 'radial-gradient(#d2d2d7 1px, transparent 1px)', backgroundSize: '24px 24px' }}
       />
       <div className="relative max-w-[420px] px-6 text-center">
         <div
           className="relative mx-auto mb-5 flex h-[84px] w-[84px] items-center justify-center rounded-3xl border border-line"
-          style={{ background: 'linear-gradient(160deg,#141418,#0d0d0f)' }}
+          style={{ background: 'linear-gradient(160deg,#ffffff,#f2f2f7)', boxShadow: '0 14px 38px rgba(0,0,0,.08)' }}
         >
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect x="4" y="4" width="24" height="24" rx="4" stroke="#3f3f46" strokeWidth="1.5" />
-            <circle cx="11" cy="11" r="2" fill="#3f3f46" />
-            <path d="M5 22 L11 16 L16 21 L20 17 L27 24" stroke="#3f3f46" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            <rect x="4" y="4" width="24" height="24" rx="4" stroke="#86868b" strokeWidth="1.5" />
+            <circle cx="11" cy="11" r="2" fill="#86868b" />
+            <path d="M5 22 L11 16 L16 21 L20 17 L27 24" stroke="#86868b" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span className="absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-grass" style={{ boxShadow: '0 4px 12px rgba(34,197,94,.4)' }}>
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="#0d0d0f" strokeWidth="1.8" strokeLinecap="round" /></svg>
+          <span className="absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-grass" style={{ boxShadow: '0 4px 12px rgba(0,113,227,.3)' }}>
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="white" strokeWidth="1.8" strokeLinecap="round" /></svg>
           </span>
         </div>
         <div className="mb-2 text-xl font-semibold text-fg">{t('empty.title')}</div>
@@ -880,8 +880,8 @@ function SettingsModal({
     setTesting(false);
   }
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-4 backdrop-blur" onClick={onClose}>
-      <div className="w-full max-w-md animate-fade-in-up rounded-2xl border border-line bg-panel p-6" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 p-4 backdrop-blur-md" onClick={onClose}>
+      <div className="w-full max-w-md animate-fade-in-up rounded-[24px] border border-white/70 bg-panel p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="mb-1 flex items-center justify-between">
           <h2 className="text-base font-semibold text-fg">{t('set.title')}</h2>
           <button onClick={onClose} className="text-sm text-fg2 hover:text-fg">{t('set.close')}</button>

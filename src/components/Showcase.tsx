@@ -42,22 +42,22 @@ export default function Showcase() {
   const chips: (ShotCat | 'all')[] = ['all', ...CATEGORIES];
 
   return (
-    <section className="mt-14">
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold text-fg">{t('showcase.title')}</h2>
-        <p className="mt-1 text-sm text-mut">{t('showcase.sub')}</p>
+    <section className="mt-20">
+      <div className="mb-7 text-center">
+        <h2 className="text-3xl font-semibold tracking-tight text-fg">{t('showcase.title')}</h2>
+        <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-mut">{t('showcase.sub')}</p>
       </div>
 
       {/* 主题分类 */}
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mb-6 flex flex-wrap justify-center gap-2">
         {chips.map((c) => {
           const Icn = CAT_ICON[c];
           return (
             <button
               key={c}
               onClick={() => setCat(c)}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs transition ${
-                cat === c ? 'bg-iris font-medium text-ink' : 'border border-line text-fg2 hover:border-iris/50'
+              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs transition ${
+                cat === c ? 'bg-fg font-medium text-white shadow-sm' : 'border border-line bg-white text-fg2 hover:border-mut2'
               }`}
             >
               {Icn && <Icn className="h-3.5 w-3.5" />}
@@ -72,7 +72,7 @@ export default function Showcase() {
           <div
             key={s.id}
             onClick={() => use(s)}
-            className="group relative mb-4 block w-full cursor-pointer overflow-hidden rounded-2xl border border-line text-left transition hover:border-iris/50"
+            className="group relative mb-4 block w-full cursor-pointer overflow-hidden rounded-[22px] border border-black/[0.06] bg-white text-left shadow-[0_6px_24px_rgba(0,0,0,.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,.1)]"
           >
             {shotImage(s) ? (
               <img src={shotImage(s)} alt={shotTitle(s, lang)} className={`w-full ${H[s.ratio]} object-cover`} loading="lazy" />
@@ -84,7 +84,7 @@ export default function Showcase() {
             <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/85 via-black/20 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
               <div className="line-clamp-3 text-[12px] leading-snug text-neutral-200">{shotPrompt(s, lang)}</div>
               <div className="mt-2 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-lg bg-iris px-2.5 py-1 text-[11px] font-medium text-ink">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-iris px-2.5 py-1 text-[11px] font-medium text-white">
                   ↑ {t('showcase.use')}
                 </span>
                 <button

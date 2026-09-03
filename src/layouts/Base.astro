@@ -36,24 +36,18 @@ const nav = [
     <meta property="og:image:height" content="1024" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <header class="sticky top-0 z-30 border-b border-linesoft bg-ink/80 backdrop-blur">
-      <div class="mx-auto flex h-14 max-w-6xl items-center gap-5 px-4 sm:px-6">
+    <header class="sticky top-0 z-30 border-b border-black/[0.06] bg-ink/80 backdrop-blur-2xl">
+      <div class="mx-auto flex h-[52px] max-w-7xl items-center gap-5 px-4 sm:px-6 lg:px-8">
         <a href="/" class="flex items-center gap-2.5">
           <span
-            class="flex h-[22px] w-[22px] items-center justify-center rounded-md"
-            style="background:linear-gradient(135deg,#22c55e,#0e7a3b);box-shadow:0 0 0 1px rgba(34,197,94,.3),0 4px 12px rgba(34,197,94,.25)"
+            class="flex h-7 w-7 items-center justify-center rounded-[9px]"
+            style="background:linear-gradient(145deg,#5ac8fa,#0071e3);box-shadow:0 4px 12px rgba(0,113,227,.24)"
           >
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1.5 L8 6 L6 10.5 L4 6 Z" fill="#0d0d0f"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 12 12" fill="none"><path d="M6 1.5 L8 6 L6 10.5 L4 6 Z" fill="white"></path></svg>
           </span>
-          <span class="font-semibold tracking-tight">GPT-Image-2 <span class="text-grass">Tools</span></span>
+          <span class="font-semibold tracking-tight">Image <span class="text-mut">Studio</span></span>
         </a>
         <nav class="flex gap-1 text-sm">
           {
@@ -82,7 +76,7 @@ const nav = [
           rel="noopener"
           title="Star on GitHub"
           aria-label="GitHub"
-          class="flex items-center gap-1.5 rounded-lg border border-line px-2.5 py-1.5 text-xs text-fg2 transition hover:border-[#3a3a44] hover:text-fg"
+          class="flex items-center gap-1.5 rounded-lg border border-line bg-white/60 px-2.5 py-1.5 text-xs text-fg2 transition hover:border-mut2 hover:text-fg"
         >
           <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
             ><path
@@ -94,14 +88,19 @@ const nav = [
         <LangToggle client:load />
       </div>
     </header>
-    <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
       <slot />
-      <footer class="mt-16 border-t border-linesoft pt-6 text-xs text-mut2">
-        <span data-i18n="footer.note">客户端工具 · 你的密钥只存在本机，不会上传</span> ·
-        <a href="https://github.com/xianjianlf2/gpt-image-2-tools" target="_blank" rel="noopener" class="hover:text-fg2">GitHub</a> ·
-        <a href="/rss.xml" class="hover:text-fg2">RSS</a> ·
-        <a href="/sitemap.xml" class="hover:text-fg2">Sitemap</a> ·
-        <a href="https://markxian.cn" target="_blank" rel="noopener" class="hover:text-fg2">Built by Mark Xian ↗</a>
+      <footer class="mt-20 flex flex-col gap-3 border-t border-linesoft py-7 text-xs text-mut2 sm:flex-row sm:flex-wrap sm:items-center">
+        <span data-i18n="footer.note">客户端工具 · 你的密钥只存在本机，不会上传</span>
+        <span class="hidden sm:inline">·</span>
+        <div class="flex flex-wrap gap-x-3 gap-y-2">
+          <a href="https://github.com/xianjianlf2/gpt-image-2-tools" target="_blank" rel="noopener" class="hover:text-fg2">GitHub</a>
+          <a href="/rss.xml" class="hover:text-fg2">RSS</a>
+          <a href="/sitemap.xml" class="hover:text-fg2">Sitemap</a>
+          <a href="https://markxian.cn" target="_blank" rel="noopener" class="hover:text-fg2">Built by Mark Xian ↗</a>
+          <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer" class="hover:text-fg2">粤ICP备2026035698号</a>
+          <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44200102445956" target="_blank" rel="noopener noreferrer" class="hover:text-fg2">粤公网安备44200102445956号</a>
+        </div>
       </footer>
     </main>
     <script>
@@ -122,7 +121,7 @@ const nav = [
           } catch (e) {}
           const dot = pill.querySelector('span:first-child');
           const txt = pill.querySelector('span:last-child');
-          if (dot) dot.setAttribute('style', on ? 'width:6px;height:6px;border-radius:9999px;background:#22c55e;box-shadow:0 0 8px #22c55e' : 'width:6px;height:6px;border-radius:9999px;background:#52525b');
+          if (dot) dot.setAttribute('style', on ? 'width:6px;height:6px;border-radius:9999px;background:#34c759;box-shadow:0 0 8px rgba(52,199,89,.45)' : 'width:6px;height:6px;border-radius:9999px;background:#86868b');
           if (txt) txt.textContent = DICT[lang][on ? 'conn.on' : 'conn.off'];
         }
       }

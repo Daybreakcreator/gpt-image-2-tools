@@ -39,7 +39,7 @@ export default function Lightbox({ images, index, source, onIndexChange, onClose
           {source && (
             <button
               onClick={() => setCompare((v) => !v)}
-              className={`rounded-lg px-3 py-1.5 text-xs transition ${compare ? 'bg-iris text-ink font-medium' : 'border border-line text-fg2 hover:border-[#3a3a44]'}`}
+              className={`rounded-lg px-3 py-1.5 text-xs transition ${compare ? 'bg-iris text-white font-medium' : 'border border-line text-fg2 hover:border-mut2'}`}
             >
               {t('lb.compare')}
             </button>
@@ -182,7 +182,7 @@ function Compare({ before, after }: { before: string; after: string }) {
       />
       {/* labels */}
       <span className="absolute left-2 top-2 rounded bg-black/60 px-1.5 py-0.5 text-[10px] text-white">{t('lb.before')}</span>
-      <span className="absolute right-2 top-2 rounded bg-iris/80 px-1.5 py-0.5 text-[10px] text-ink">{t('lb.after')}</span>
+      <span className="absolute right-2 top-2 rounded bg-iris/80 px-1.5 py-0.5 text-[10px] text-white">{t('lb.after')}</span>
       {/* handle */}
       <div className="absolute bottom-0 top-0 w-px bg-white/80" style={{ left: `${pos}%` }}>
         <span className="absolute top-1/2 grid h-7 w-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/70 bg-black/60 text-xs text-white">⇄</span>

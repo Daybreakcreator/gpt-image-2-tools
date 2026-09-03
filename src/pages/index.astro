@@ -7,9 +7,10 @@ import { LANDINGS } from '../lib/landing';
 ---
 
 <Base>
-  <section class="mb-6">
-    <h1 class="text-2xl font-bold tracking-tight sm:text-[28px]" data-i18n="hero.title">想到即生成</h1>
-    <p class="mt-1.5 text-sm text-mut" data-i18n="hero.sub">一个输入框：写文字成图，拖张图进来就能改</p>
+  <section class="mx-auto mb-10 max-w-3xl text-center lg:mb-12">
+    <p class="mb-3 text-sm font-semibold text-grass">GPT-Image 创作空间</p>
+    <h1 class="text-[40px] font-semibold leading-[1.06] tracking-[-0.045em] sm:text-6xl" data-i18n="hero.title">想到即生成</h1>
+    <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-mut sm:text-lg" data-i18n="hero.sub">一个输入框：写文字成图，拖张图进来就能改</p>
   </section>
 
   <Playground client:only="react" />
@@ -36,7 +37,7 @@ import { LANDINGS } from '../lib/landing';
     <div class="flex flex-wrap gap-2 pt-1">
       {
         LANDINGS.map((l) => (
-          <a href={`/${l.slug}`} class="rounded-lg border border-line px-3 py-1.5 text-xs text-fg2 transition hover:border-[#3a3a44] hover:text-fg">
+          <a href={`/${l.slug}`} class="rounded-lg border border-line bg-white px-3 py-1.5 text-xs text-fg2 transition hover:border-mut2 hover:text-fg">
             {l.h1_zh}
           </a>
         ))
