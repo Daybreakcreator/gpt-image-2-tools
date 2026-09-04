@@ -427,7 +427,7 @@ export default function Playground() {
   return (
     <>
       {imported && (
-        <div className="fixed left-1/2 top-16 z-[60] -translate-x-1/2 animate-fade-in rounded-full border border-grass/30 bg-grass/15 px-4 py-2 text-xs text-grass">
+        <div role="status" aria-live="polite" className="fixed left-1/2 top-16 z-[60] -translate-x-1/2 animate-fade-in rounded-full border border-grass/30 bg-grass/15 px-4 py-2 text-xs text-grass">
           {t('import.done')}
         </div>
       )}
@@ -573,12 +573,12 @@ export default function Playground() {
                 </div>
               </div>
               {partialFail > 0 && (
-                <div className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-amber-500/30 bg-amber-500/[0.08] px-3 py-2 text-[12px] text-amber-300">
+                <div role="status" className="mb-4 flex items-center justify-between gap-3 rounded-xl border border-amber-500/30 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
                   <span>{t('res.failed', { n: partialFail })}</span>
                   <button
                     onClick={() => fillMissing(partialFail)}
                     disabled={filling}
-                    className="flex shrink-0 items-center gap-1.5 rounded-lg border border-amber-500/40 px-2.5 py-1 text-amber-200 transition hover:bg-amber-500/15 disabled:opacity-50"
+                    className="flex shrink-0 items-center gap-1.5 rounded-lg border border-amber-500/40 px-2.5 py-1 text-amber-800 transition hover:bg-amber-100 disabled:opacity-50"
                   >
                     {filling ? <Spinner /> : '↻'} {t('res.retryFailed')}
                   </button>
@@ -879,9 +879,14 @@ function SettingsModal({
   const [info, setInfo] = useState<{ groups: number; images: number; mb: number } | null>(null);
   useEffect(() => {
     storageInfo().then(setInfo);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
   }, []);
   // 配置一变，旧测试结果作废
   useEffect(() => setTest(null), [cfg.baseUrl, cfg.apiKey, cfg.model]);
@@ -894,10 +899,10 @@ function SettingsModal({
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 p-4 backdrop-blur-md" onClick={onClose}>
-      <div className="w-full max-w-md animate-fade-in-up rounded-[24px] border border-white/70 bg-panel p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-labelledby="settings-title" className="max-h-[calc(100dvh-2rem)] w-full max-w-md animate-fade-in-up overflow-y-auto overscroll-contain rounded-[24px] border border-white/70 bg-panel p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="mb-1 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-fg">{t('set.title')}</h2>
-          <button onClick={onClose} className="text-sm text-fg2 hover:text-fg">{t('set.close')}</button>
+          <h2 id="settings-title" className="text-base font-semibold text-fg">{t('set.title')}</h2>
+          <button type="button" onClick={onClose} className="-mr-2 min-h-9 rounded-lg px-2 text-sm text-fg2 transition hover:bg-panel2 hover:text-fg">{t('set.close')}</button>
         </div>
         <p className="mb-5 text-xs leading-relaxed text-mut">{t('set.privacy')}</p>
         <div className="space-y-4">
@@ -975,7 +980,7 @@ function SettingsModal({
             )}
           </button>
           {test && (
-            <div className="mt-2 space-y-1.5 rounded-xl border border-line bg-panel2/40 p-3">
+            <div aria-live="polite" className="mt-2 space-y-1.5 rounded-xl border border-line bg-panel2/40 p-3">
               {test.steps.map((s, i) => {
                 const note = s.note === 'needFill' ? t('test.needFill') : s.note === 'unreachable' ? t('test.unreachable') : s.note === 'timeout' ? t('test.timeout') : s.note;
                 return (
@@ -1049,12 +1054,12 @@ function ErrorCard({ msg, onSettings, onRetry }: { msg: string; onSettings: () =
   const t = useT();
   const a = classifyError(t, msg);
   return (
-    <div className="animate-fade-in rounded-xl border border-red-500/30 bg-red-500/[0.08] p-3 text-left text-[13px] text-red-300">
+    <div role="alert" className="animate-fade-in rounded-xl border border-red-200 bg-red-50 p-3 text-left text-[13px] text-red-800">
       <div>{a.text}</div>
       {(a.settings || a.retry) && (
         <div className="mt-2 flex gap-2">
           {a.settings && (
-            <button onClick={onSettings} className="rounded-lg border border-red-500/40 px-2.5 py-1 text-xs text-red-200 hover:bg-red-500/15">
+            <button onClick={onSettings} className="rounded-lg border border-red-300 px-2.5 py-1 text-xs text-red-800 hover:bg-red-100">
               {t('btn.toSettings')}
             </button>
           )}

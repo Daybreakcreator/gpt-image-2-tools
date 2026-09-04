@@ -178,7 +178,9 @@ export default function PromptField({ value, onChange, onSubmit, placeholder, sh
         <textarea
           id="prompt-input"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          maxLength={2000}
+          aria-label={placeholder ?? t('prompt.placeholder')}
+          onChange={(e) => onChange(e.target.value.slice(0, 2000))}
           onKeyDown={(e) => {
             if (e.key !== 'Enter') return;
             // 中文输入法选词时的回车不触发
@@ -283,9 +285,9 @@ export default function PromptField({ value, onChange, onSubmit, placeholder, sh
         </div>
       </div>
 
-      {enhErr && <p className="text-[12px] text-red-400">{enhErr}</p>}
+      {enhErr && <p role="alert" className="text-[12px] text-red-700">{enhErr}</p>}
       {voiceMsg && (
-        <p className={`flex items-center gap-1.5 text-[12px] ${voiceMsg.kind === 'err' ? 'text-red-400' : 'text-mut'}`}>
+        <p aria-live="polite" className={`flex items-center gap-1.5 text-[12px] ${voiceMsg.kind === 'err' ? 'text-red-700' : 'text-mut'}`}>
           {voiceMsg.kind === 'info' && correcting && <span className="h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" />}
           {voiceMsg.text}
         </p>
