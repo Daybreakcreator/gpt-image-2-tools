@@ -142,7 +142,6 @@ export default function Playground() {
     }
     setCfg(c);
     window.dispatchEvent(new Event('langchange')); // 刷新导航连接状态
-    if (!isConfigured(c)) setShowSettings(true);
   }, []);
 
   // 历史「回到这组」：从 localStorage 恢复提示词+参数
@@ -434,7 +433,7 @@ export default function Playground() {
       )}
       <div className="apple-card grid overflow-hidden rounded-[28px] lg:grid-cols-[460px_1fr]">
         {/* ── Composer ── */}
-        <div className="space-y-4 border-b border-linesoft p-5 sm:p-7 lg:border-b-0 lg:border-r lg:p-8">
+        <div className="min-w-0 space-y-4 border-b border-linesoft p-5 sm:p-7 lg:border-b-0 lg:border-r lg:p-8">
           <div className="flex items-center justify-between">
             <span
               className={`rounded-full border px-3 py-1 text-[12px] font-medium ${
@@ -443,11 +442,19 @@ export default function Playground() {
             >
               {isEdit ? t('badge.i2i', { n: images.length }) : t('badge.t2i')}
             </span>
-            <button onClick={() => setShowSettings(true)} className="text-xs text-fg2 hover:text-fg">{t('btn.settings')}</button>
+            <button
+              onClick={() => setShowSettings(true)}
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition active:scale-[.97] ${
+                configured ? 'border border-line bg-white text-fg2 hover:border-mut2' : 'bg-fg text-white shadow-sm hover:bg-black'
+              }`}
+            >
+              <span className={`h-1.5 w-1.5 rounded-full ${configured ? 'bg-[#34c759]' : 'bg-white/60'}`} />
+              {configured ? t('btn.settings') : t('btn.connect')}
+            </button>
           </div>
 
           {showHint && (
-            <div className="animate-fade-in flex items-start gap-2 rounded-xl border border-grass/25 bg-grass/[0.06] px-3 py-2.5 text-[12px] leading-relaxed text-fg2">
+            <div className="animate-fade-in hidden items-start gap-2 rounded-xl border border-grass/25 bg-grass/[0.06] px-3 py-2.5 text-[12px] leading-relaxed text-fg2 sm:flex">
               <IconBulb className="mt-0.5 h-3.5 w-3.5 shrink-0 text-grass" />
               <p className="flex-1">{t('hint.voice')}</p>
               <button onClick={dismissHint} aria-label={t('btn.clear')} className="grid h-4 w-4 place-items-center rounded text-mut transition hover:text-fg">×</button>
@@ -519,7 +526,7 @@ export default function Playground() {
             </button>
           ) : (
             <button onClick={() => onGenerate()} className="btn-primary hidden h-[46px] w-full text-[15px] lg:flex">
-              {results.length ? t('btn.regen') : t('btn.generate')}
+              {!configured ? t('btn.connect') : results.length ? t('btn.regen') : t('btn.generate')}
               <span className="font-mono text-[11px] opacity-50">⌘↵</span>
             </button>
           )}
@@ -527,7 +534,7 @@ export default function Playground() {
         </div>
 
         {/* ── Results ── */}
-        <div ref={resultsRef} className="min-h-[560px] scroll-mt-20 bg-[#fafafa] p-5 sm:p-7 lg:p-8">
+        <div ref={resultsRef} className="min-h-[560px] min-w-0 scroll-mt-20 bg-[#fafafa] p-5 sm:p-7 lg:p-8">
           {loading ? (
             partials.length > 0 ? (
               <StreamingPreview images={partials} elapsed={elapsed} />
@@ -535,7 +542,7 @@ export default function Playground() {
               <Skeletons n={p.n} elapsed={elapsed} size={p.size} />
             )
           ) : results.length === 0 ? (
-            <EmptyState />
+            <EmptyState configured={configured} onSettings={() => setShowSettings(true)} />
           ) : (
             <div className="flex flex-col">
               <div className="mb-4 flex items-baseline justify-between">
@@ -654,7 +661,7 @@ export default function Playground() {
           </button>
         ) : (
           <button onClick={() => onGenerate()} className="btn-primary h-[46px] w-full text-[15px]">
-            {isEdit ? t('btn.editGen') : t('btn.generate')}
+            {!configured ? t('btn.connect') : isEdit ? t('btn.editGen') : t('btn.generate')}
           </button>
         )}
       </div>
@@ -782,7 +789,7 @@ function MetaCard({ meta, actual }: { meta: { size: string; quality: string; mod
   );
 }
 
-function EmptyState() {
+function EmptyState({ configured, onSettings }: { configured: boolean; onSettings: () => void }) {
   const t = useT();
   return (
     <div className="relative flex min-h-[496px] items-center justify-center overflow-hidden rounded-[22px] border border-black/[0.04] bg-white">
@@ -804,18 +811,24 @@ function EmptyState() {
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 2v8M2 6h8" stroke="white" strokeWidth="1.8" strokeLinecap="round" /></svg>
           </span>
         </div>
-        <div className="mb-2 text-xl font-semibold text-fg">{t('empty.title')}</div>
+        <div className="mb-2 text-xl font-semibold text-fg">{configured ? t('empty.title') : t('empty.connectTitle')}</div>
         <div className="text-[13px] leading-relaxed text-mut">
-          {t('empty.sub').split('\n').map((line, i) => (
+          {(configured ? t('empty.sub') : t('empty.connectSub')).split('\n').map((line, i) => (
             <span key={i}>
               {line}
               <br />
             </span>
           ))}
         </div>
-        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-panel px-3.5 py-2 text-xs text-fg2">
-          <IconBulb className="h-3.5 w-3.5" /> <span className="font-mono text-fg">⌘V</span> {t('empty.paste')}
-        </div>
+        {configured ? (
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-panel px-3.5 py-2 text-xs text-fg2">
+            <IconBulb className="h-3.5 w-3.5" /> <span className="font-mono text-fg">⌘V</span> {t('empty.paste')}
+          </div>
+        ) : (
+          <button onClick={onSettings} className="mt-6 inline-flex items-center rounded-full bg-grass px-5 py-2.5 text-sm font-medium text-white shadow-[0_8px_20px_rgba(0,113,227,.2)] transition hover:brightness-105 active:scale-[.98]">
+            {t('btn.connect')} →
+          </button>
+        )}
       </div>
     </div>
   );

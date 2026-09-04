@@ -2,7 +2,7 @@
 # 域名原地保留、无需改 DNS、零中断。部署：npx wrangler deploy -c wrangler.image.toml
 name = "gpt-image-2"
 main = "worker/image-worker.js"
-compatibility_date = "2024-11-01"
+compatibility_date = "2026-09-04"
 routes = [{ pattern = "image.markxian.cn", custom_domain = true }]
 assets = { directory = "./dist", binding = "ASSETS" }
 
